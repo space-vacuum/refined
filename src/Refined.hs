@@ -51,6 +51,7 @@
 {-# LANGUAGE TypeApplications           #-}
 {-# LANGUAGE TypeFamilies               #-}
 {-# LANGUAGE TypeOperators              #-}
+{-# LANGUAGE UndecidableInstances       #-}
 
 --------------------------------------------------------------------------------
 
