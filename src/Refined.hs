@@ -327,7 +327,7 @@ instance forall p a. (Arbitrary a, Typeable a, Typeable p, Predicate p a) => Arb
     where
       loop :: Int -> Gen a -> Gen (Refined p a)
       loop !runs gen
-        | runs < 100 = do
+        | runs < 1000 = do
             m <- suchThatRefined gen
             case m of
               Just x -> do
