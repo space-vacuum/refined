@@ -334,17 +334,19 @@ instance forall p a. (Arbitrary a, Typeable a, Typeable p, Predicate p a) => Arb
                 pure x
               Nothing -> do
                 loop (runs + 1) gen
-        | otherwise = error (refinedGenError (Proxy @p) (Proxy @a))
+        | otherwise = error (refinedGenError runs (Proxy @p) (Proxy @a))
   shrink = rights . map refine . QC.shrink . unrefine
 
 refinedGenError :: (Typeable p, Typeable a)
-  => Proxy p -> Proxy a -> String
-refinedGenError p a = "arbitrary :: Refined ("
+  => Int -> Proxy p -> Proxy a -> String
+refinedGenError runs p a = "arbitrary :: Refined ("
   ++ typeName p
   ++ ") ("
   ++ typeName a
   ++ "): Failed to generate a value that satisfied"
-  ++ " the predicate after 100 tries."
+  ++ " the predicate after "
+  ++ show runs
+  ++ " tries."
 
 suchThatRefined :: forall p a. (Predicate p a)
   => Gen a -> Gen (Maybe (Refined p a))
